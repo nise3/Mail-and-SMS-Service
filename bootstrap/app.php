@@ -64,7 +64,7 @@ $app->configure('auth');
 $app->configure('services');
 $app->configure('nise3');
 $app->configure('httpclientendpoint');
-
+$app->configure('mail');
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -102,7 +102,7 @@ $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->register(Felixkiss\UniqueWithValidator\ServiceProvider::class);
-
+$app->register(Illuminate\Mail\MailServiceProvider::class);
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes

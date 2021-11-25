@@ -33,3 +33,25 @@ $router->group(['prefix' => 'api/v1', 'as' => 'api.v1'], function () use ($route
 
 });
 
+/** Mail Sender */
+$router->post('sendmail', function () {
+    try {
+        $to = [
+            "tasmidur.softbdltd@gmail.com",
+            "tasmidur.softbdltd@gmail.com",
+            "rahulbgc21@gmail.com"
+        ];
+        $from = "tasmidurrahman@gmail.com";
+        $subject = "Testing Mail - " . time();
+        $details = [
+            "from" => $from,
+            "message" => "Nise Mailing Service"
+        ];
+        $messageBody = view("mail.default", compact('details'));
+        $mail = new App\Services\MailService($from, $to, $subject, $messageBody);
+        $mail->sendMail();
+    } catch (Exception $exception) {
+        dd($exception->getMessage());
+    }
+});
+
