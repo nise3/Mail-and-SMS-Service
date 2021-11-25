@@ -22,7 +22,7 @@ class ApiInfoController extends Controller
 
             ],
             'description'=>[
-                'It is a Email and Sms management api service that manages services related to Email and Sms'
+                'It is a Email and Sms management api service that manages services related to Email and SMS'
             ]
         ];
         return Response::json($response, ResponseAlias::HTTP_OK);
