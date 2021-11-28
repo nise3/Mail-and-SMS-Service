@@ -5,7 +5,7 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^8.0",
+        "php": "^7.2",
         "ext-json": "*",
         "ext-pdo": "*",
         "felixkiss/uniquewith-validator": "^3.4",
@@ -13,9 +13,11 @@
         "guzzlehttp/guzzle": "^7.3",
         "illuminate/mail": "^8.73",
         "irazasyed/larasupport": "^1.7",
+        "khbd/laravel-wso2-identity-api-user": "^0.0.2",
         "laravel/lumen-framework": "^8.0",
         "laravel/tinker": "^2.6",
-        "phabloraylan/lumen-middleware-trim-or-convert-strings": "^1.0"
+        "phabloraylan/lumen-middleware-trim-or-convert-strings": "^1.0",
+        "vladimir-yuldashev/laravel-queue-rabbitmq": "^11.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

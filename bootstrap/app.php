@@ -65,6 +65,7 @@ $app->configure('services');
 $app->configure('nise3');
 $app->configure('httpclientendpoint');
 $app->configure('mail');
+$app->configure('IdpUser');
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -103,6 +104,9 @@ $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->register(Felixkiss\UniqueWithValidator\ServiceProvider::class);
 $app->register(Illuminate\Mail\MailServiceProvider::class);
+$app->register(VladimirYuldashev\LaravelQueueRabbitMQ\LaravelQueueRabbitMQServiceProvider::class);
+$app->register(Khbd\LaravelWso2IdentityApiUser\IdpUserServiceProvider::class);
+
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes

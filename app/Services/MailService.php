@@ -4,6 +4,7 @@
 namespace App\Services;
 
 use App\Mail\SendMail;
+use App\Models\MailLog;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
@@ -12,20 +13,7 @@ use Illuminate\Support\Facades\Mail;
  */
 class MailService
 {
-
-    private array $to;
-    private string $form;
-    private string $recipientName;
-    private string $replyTo;
-    private string $subject;
-    private string $messageBody;
-    private string $template;
-    private array $cc;
-    private array $bcc;
-    private array $attachments;
-
     public const RECIPIENT_NAME = 'Nise3';
-
     /** FILE_EXTENSION_ALLOWABLE KEY */
     public const ALLOWABLE_PDF = "pdf";
     public const ALLOWABLE_DOC = "doc";
@@ -70,105 +58,12 @@ class MailService
         self::ALLOWABLE_TXT => 'text/plain'
     ];
 
-
-    /**
-     * @param string $form
-     * @param array $to
-     * @param string $subject
-     * @param string $messageBody
-     * @param string $recipientName
-     * @param string $replyTo
-     * @param array $cc
-     * @param array $bcc
-     */
-    public function __construct(string $form, array $to, string $subject, string $messageBody, string $recipientName = "", string $replyTo = "", array $cc = [], array $bcc = [])
+    public function __construct()
     {
-        $this->to = $to;
-        $this->form = $form;
-        $this->recipientName = $recipientName ?? self::RECIPIENT_NAME;
-        $this->replyTo = $replyTo;
-        $this->subject = $subject;
-        $this->messageBody = $messageBody;
-        $this->cc = $cc;
-        $this->bcc = $bcc;
+
     }
 
-    /**
-     * @param array $to
-     */
-    public function setTo(array $to): void
-    {
-        $this->to = $to;
-    }
-
-    /**
-     * @param string $form
-     */
-    public function setForm(string $form): void
-    {
-        $this->form = $form;
-    }
-
-    /**
-     * @param string|null $recipientName
-     */
-    public function setRecipientName(?string $recipientName): void
-    {
-        $this->recipientName = $recipientName;
-    }
-
-    /**
-     * @param string|null $replyTo
-     */
-    public function setReplyTo(?string $replyTo): void
-    {
-        $this->replyTo = $replyTo;
-    }
-
-    /**
-     * @param string $subject
-     */
-    public function setSubject(string $subject): void
-    {
-        $this->subject = $subject;
-    }
-
-    /**
-     * @param string $messageBody
-     */
-    public function setMessageBody(string $messageBody): void
-    {
-        $this->messageBody = $messageBody;
-    }
-
-    /**
-     * @param string|null $template
-     */
-    public function setTemplate(?string $template): void
-    {
-        $this->template = $template;
-    }
-
-    /**
-     * @param array|null $cc
-     */
-    public function setCc(?array $cc): void
-    {
-        $this->cc = $cc;
-    }
-
-    /**
-     * @param array|null $bcc
-     */
-    public function setBcc(?array $bcc): void
-    {
-        $this->bcc = $bcc;
-    }
-
-    /**
-     * @param array $attachments
-     */
-    public function setAttachments(array $attachments): void
+    private function getAttachments(array $attachments): array
     {
         $attachmentFile = [];
         foreach ($attachments as $attachment) {
@@ -178,46 +73,50 @@ class MailService
             }
         }
 
-        $this->attachments = $attachmentFile;
+        return $attachmentFile;
 
     }
 
-    public function sendMail()
+    public function sendMail(array $mailData): bool
     {
         try {
             $config = [
-                'to' => $this->to,
-                'from' => $this->form,
-                'subject' => $this->subject,
-                'messageBody' => $this->messageBody,
-                'name'=>$this->recipientName
+                'to' => $mailData['to'],
+                'from' => $mailData['from'],
+                'subject' => $mailData['subject'],
+                'messageBody' => $mailData['message_body'],
+                'name' => !empty($mailData['recipient_name']) ? $mailData['recipient_name'] : self::RECIPIENT_NAME
             ];
 
-            if (!empty($this->replyTo)) {
-                $config['replyTo'] = $this->replyTo;
+            if (!empty($mailData['reply_to'])) {
+                $config['replyTo'] = $mailData['reply_to'];
             }
-            if (!empty($this->template)) {
-                $config['template'] = $this->template;
+            if (!empty($mailData['cc'])) {
+                $config['cc'] = $mailData['cc'];
             }
-            if (!empty($this->cc)) {
-                $config['cc'] = $this->cc;
+            if (!empty($mailData['bcc'])) {
+                $config['bcc'] = $mailData['bcc'];
             }
-            if (!empty($this->bcc)) {
-                $config['bcc'] = $this->bcc;
+            if (!empty($mailData['attachment'])) {
+                $config['attachment'] = $mailData['attachment'];
             }
-            if (!empty($this->attachment)) {
-                $config['attachment'] = $this->attachment;
-            }
-
             $mailSend = new SendMail($config);
             Mail::send($mailSend);
 
             if (Mail::failures()) {
-                Log::debug('Email Send to ' . implode(', ', $this->to) . " is fail.");
+                Log::debug('Email Send to ' . implode(', ', $mailData['to']) . " is fail.");
+                return false;
+            } else {
+                unset($config['messageBody']);
+                $mailLog=app(MailLog::class);
+                $mailLog->mail_log=$config;
+                $mailLog->save();
+                return true;
             }
         } catch (\Exception $e) {
             Log::debug($e->getMessage());
             Log::debug($e->getTraceAsString());
         }
+        return false;
     }
 }
