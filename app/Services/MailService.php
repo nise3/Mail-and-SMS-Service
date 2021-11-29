@@ -3,10 +3,16 @@
 
 namespace App\Services;
 
+use App\Helpers\Classes\FileHandler;
 use App\Mail\SendMail;
 use App\Models\MailLog;
+use Exception;
+use http\Exception\RuntimeException;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Ramsey\Uuid\Uuid;
+use Throwable;
 
 /**
  *
@@ -14,6 +20,9 @@ use Illuminate\Support\Facades\Mail;
 class MailService
 {
     public const RECIPIENT_NAME = 'Nise3';
+    public const CACHE_KEY_TEMPORARY_ATTACHMENT_FILEPATH = "CACHE_KEY_TEMPORARY_ATTACHMENT_FILEPATH";
+    public const TEMPORARY_ATTACHMENT_FILEPATH = "email-temporary-file";
+
     /** FILE_EXTENSION_ALLOWABLE KEY */
     public const ALLOWABLE_PDF = "pdf";
     public const ALLOWABLE_DOC = "doc";
@@ -63,60 +72,50 @@ class MailService
 
     }
 
-    private function getAttachments(array $attachments): array
-    {
-        $attachmentFile = [];
-        foreach ($attachments as $attachment) {
-            $ext = pathinfo($attachment, PATHINFO_EXTENSION);
-            if ($ext && in_array($ext, self::FILE_EXTENSION_ALLOWABLE)) {
-                $attachmentFile[] = $attachment;
-            }
-        }
-
-        return $attachmentFile;
-
-    }
-
+    /**
+     * @throws Exception
+     * @throws Throwable
+     */
     public function sendMail(array $mailData): bool
     {
-        try {
-            $config = [
-                'to' => $mailData['to'],
-                'from' => $mailData['from'],
-                'subject' => $mailData['subject'],
-                'messageBody' => $mailData['message_body'],
-                'name' => !empty($mailData['recipient_name']) ? $mailData['recipient_name'] : self::RECIPIENT_NAME
-            ];
+        $config = [
+            'to' => $mailData['to'],
+            'from' => $mailData['from'],
+            'subject' => $mailData['subject'],
+            'messageBody' => $mailData['message_body'],
+            'name' => !empty($mailData['recipient_name']) ? $mailData['recipient_name'] : self::RECIPIENT_NAME
+        ];
 
-            if (!empty($mailData['reply_to'])) {
-                $config['replyTo'] = $mailData['reply_to'];
-            }
-            if (!empty($mailData['cc'])) {
-                $config['cc'] = $mailData['cc'];
-            }
-            if (!empty($mailData['bcc'])) {
-                $config['bcc'] = $mailData['bcc'];
-            }
-            if (!empty($mailData['attachment'])) {
-                $config['attachment'] = $mailData['attachment'];
-            }
-            $mailSend = new SendMail($config);
-            Mail::send($mailSend);
-
-            if (Mail::failures()) {
-                Log::debug('Email Send to ' . implode(', ', $mailData['to']) . " is fail.");
-                return false;
-            } else {
-                unset($config['messageBody']);
-                $mailLog=app(MailLog::class);
-                $mailLog->mail_log=$config;
-                $mailLog->save();
-                return true;
-            }
-        } catch (\Exception $e) {
-            Log::debug($e->getMessage());
-            Log::debug($e->getTraceAsString());
+        if (!empty($mailData['reply_to'])) {
+            $config['replyTo'] = $mailData['reply_to'];
         }
-        return false;
+        if (!empty($mailData['cc'])) {
+            $config['cc'] = $mailData['cc'];
+        }
+        if (!empty($mailData['bcc'])) {
+            $config['bcc'] = $mailData['bcc'];
+        }
+        if (!empty($mailData['attachment'])) {
+            /** Store all attachment to the temporary storage before mail  send */
+            $config['attachment'] = FileHandler::storeFileContent($mailData['attachment'], self::FILE_EXTENSION_ALLOWABLE,self::TEMPORARY_ATTACHMENT_FILEPATH);
+            Cache::put(self::CACHE_KEY_TEMPORARY_ATTACHMENT_FILEPATH,$config['attachment']);
+        }
+
+        $mailSend = new SendMail($config);
+
+        Mail::send($mailSend);
+
+        throw_if((bool)count(Mail::failures()), RuntimeException::class,'Email Send to ' . implode(', ', $mailData['to']) . " is fail.");
+
+        $mailLog = app(MailLog::class);
+        $mailLog->mail_log = $config;
+        $mailLog->save();
+
+        /** Delete all attachment from the storage after mail successfully send */
+        FileHandler::deleteFile(Cache::get(self::CACHE_KEY_TEMPORARY_ATTACHMENT_FILEPATH));
+
+        return true;
+
+
     }
 }

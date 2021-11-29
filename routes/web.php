@@ -1,6 +1,10 @@
 <?php
 /** @var Router $router */
+
 use App\Helpers\Classes\CustomRouter;
+use App\Helpers\Classes\FileHandler;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Lumen\Routing\Router;
 
 $customRouter = function (string $as = '') use ($router) {
@@ -20,6 +24,7 @@ $router->group(['prefix' => 'api/v1', 'as' => 'api.v1'], function () use ($route
     $router->post('send-mail', ["as" => "mail.send-mail", "uses" => "MailSendController@mailSend"]);
 
 });
+
 
 
 

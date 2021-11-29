@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 class MailSendController extends Controller
 {
@@ -22,6 +23,9 @@ class MailSendController extends Controller
     }
 
 
+    /**
+     * @throws Throwable
+     */
     public function mailSend(Request $request):JsonResponse
     {
         Log::info("mail-payload".json_encode($request->all()));
