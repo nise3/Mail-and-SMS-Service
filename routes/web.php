@@ -23,7 +23,11 @@ $router->group(['prefix' => 'api/v1', 'as' => 'api.v1'], function () use ($route
     /** Mail Sender */
     $router->post('send-mail', ["as" => "mail.send-mail", "uses" => "MailSendController@mailSend"]);
 
+    /** Sms Sender */
+    $router->post('send-sms', ["as" => "sms.send-sms", "uses" => "SmsController@smsSend"]);
+
 });
+
 
 
 

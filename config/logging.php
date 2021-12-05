@@ -35,9 +35,14 @@ return [
     */
 
     'channels' => [
-        'org_reg' => [
-            'driver' => 'single',
-            'path' => storage_path('logs/org_reg.log'),
+        'sms_log' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/mail-sms/'.date('Y/F/').'sms/sms_log.log'),
+            'level' => 'info',
+        ],
+        'mail_log' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/mail-sms/'.date('Y/F/').'mail/mail_log.log'),
             'level' => 'info',
         ],
         'stack' => [

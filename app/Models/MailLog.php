@@ -18,4 +18,5 @@ class MailLog extends Model
     protected $casts = [
         'mail_log' => 'array',
     ];
+
 }

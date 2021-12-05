@@ -97,25 +97,25 @@ class MailService
         }
         if (!empty($mailData['attachment'])) {
             /** Store all attachment to the temporary storage before mail  send */
-            $config['attachment'] = FileHandler::storeFileContent($mailData['attachment'], self::FILE_EXTENSION_ALLOWABLE,self::TEMPORARY_ATTACHMENT_FILEPATH);
-            Cache::put(self::CACHE_KEY_TEMPORARY_ATTACHMENT_FILEPATH,$config['attachment']);
+            $config['attachment'] = FileHandler::storeFileContent($mailData['attachment'], self::TEMPORARY_ATTACHMENT_FILEPATH);
+            Cache::put(self::CACHE_KEY_TEMPORARY_ATTACHMENT_FILEPATH, $config['attachment']);
         }
 
         $mailSend = new SendMail($config);
 
         Mail::send($mailSend);
-
-        throw_if((bool)count(Mail::failures()), RuntimeException::class,'Email Send to ' . implode(', ', $mailData['to']) . " is fail.");
+        throw_if((bool)count(Mail::failures()), RuntimeException::class, 'Email Send to ' . implode(', ', $mailData['to']) . " is fail.");
 
         $mailLog = app(MailLog::class);
         $mailLog->mail_log = $config;
         $mailLog->save();
 
         /** Delete all attachment from the storage after mail successfully send */
-        FileHandler::deleteFile(Cache::get(self::CACHE_KEY_TEMPORARY_ATTACHMENT_FILEPATH));
+        if (!empty($mailData['attachment'])) {
+            FileHandler::deleteFile(Cache::get(self::CACHE_KEY_TEMPORARY_ATTACHMENT_FILEPATH));
+        }
 
         return true;
-
 
     }
 }

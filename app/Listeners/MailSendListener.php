@@ -3,7 +3,10 @@
 namespace App\Listeners;
 
 use App\Services\MailService;
+use http\Exception\RuntimeException;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class MailSendListener implements ShouldQueue
 {
@@ -14,9 +17,20 @@ class MailSendListener implements ShouldQueue
         $this->mailService = $mailService;
     }
 
+    /**
+     * @throws Throwable
+     */
     public function handle($event)
     {
         $mailData = json_decode(json_encode($event), true);
-        $this->mailService->sendMail($mailData);
+        $mailData = $mailData['data'] ?? [];
+        Log::info("MailSendListener-" . json_encode($mailData));
+
+        if (!empty($mailData) && !empty($mailData['to']) && !empty($mailData['from']) && !empty($mailData['subject']) && !empty($mailData['message_body'])) {
+            $this->mailService->sendMail($mailData);
+        } else {
+            Log::channel('mail_log')->info("Mail payload format is invalid & the payload is ".json_encode($mailData,JSON_PRETTY_PRINT));
+            throw_if(true, RuntimeException::class, "Mail payload format is invalid   & the payload is ");
+        }
     }
 }
