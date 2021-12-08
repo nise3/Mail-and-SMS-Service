@@ -66,6 +66,7 @@ $app->configure('nise3');
 $app->configure('httpclientendpoint');
 $app->configure('mail');
 $app->configure('IdpUser');
+$app->configure('nise3RabbitMq');
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -98,14 +99,16 @@ $app->routeMiddleware([
 |
 */
 
-// $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->register(Felixkiss\UniqueWithValidator\ServiceProvider::class);
 $app->register(Illuminate\Mail\MailServiceProvider::class);
-$app->register(VladimirYuldashev\LaravelQueueRabbitMQ\LaravelQueueRabbitMQServiceProvider::class);
 $app->register(Khbd\LaravelWso2IdentityApiUser\IdpUserServiceProvider::class);
+
+$app->register(App\Providers\EventServiceProvider::class);
+$app->register(App\Providers\RabbitMQServiceProvider::class);
+$app->register(VladimirYuldashev\LaravelQueueRabbitMQ\LaravelQueueRabbitMQServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

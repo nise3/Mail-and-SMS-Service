@@ -29,8 +29,7 @@
         "laravel/tinker": "^2.6",
         "league/flysystem-cached-adapter": "~1.0",
         "phabloraylan/lumen-middleware-trim-or-convert-strings": "^1.0",
-        "vladimir-yuldashev/laravel-queue-rabbitmq": "^11.3",
-        "ext-http": "*"
+        "vladimir-yuldashev/laravel-queue-rabbitmq": "dev-feat/give-accessibility-to-access-rabbitmqjob-instance"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
