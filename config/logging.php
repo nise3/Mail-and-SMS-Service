@@ -47,7 +47,7 @@ return [
 
         'single' => [
             'driver' => 'single',
-            'path' => storage_path('logs/lumen.log'),
+            'path' => storage_path('logs/'.date('Y/F/').'lumen.log'),
             'level' => 'debug',
         ],
 
