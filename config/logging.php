@@ -37,12 +37,12 @@ return [
     'channels' => [
         'sms_log' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/mail-sms/'.date('Y/F/').'sms/sms_log.log'),
+            'path' => storage_path('logs/mail-sms/' . date('Y/F/') . 'sms/sms_log.log'),
             'level' => 'info',
         ],
         'mail_log' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/mail-sms/'.date('Y/F/').'mail/mail_log.log'),
+            'path' => storage_path('logs/mail-sms/' . date('Y/F/') . 'mail/mail_log.log'),
             'level' => 'info',
         ],
         'stack' => [
@@ -52,13 +52,13 @@ return [
 
         'single' => [
             'driver' => 'single',
-            'path' => storage_path('logs/'.date('Y/F/').'lumen.log'),
+            'path' => storage_path('logs/' . date('Y/F/') . 'lumen.log'),
             'level' => 'debug',
         ],
 
         'daily' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/lumen.log'),
+            'path' => storage_path('logs/' . date('Y/F/') . 'lumen.log'),
             'level' => 'debug',
             'days' => 14,
         ],

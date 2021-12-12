@@ -27,7 +27,7 @@ class MailSendListener implements ShouldQueue
         if (!empty($mailData) && !empty($mailData['to']) && !empty($mailData['from']) && !empty($mailData['subject']) && !empty($mailData['message_body'])) {
             $this->mailService->sendMail($mailData);
         } else {
-            Log::channel('mail_log')->info("Mail payload format is invalid & the payload is ".json_encode($mailData,JSON_PRETTY_PRINT));
+            Log::channel('mail_log')->info("Mail payload format is invalid & the payload is ".json_encode($mailData));
             throw_if(true, RuntimeException::class, "Mail payload format is invalid   & the payload is ");
         }
     }

@@ -28,7 +28,7 @@ class SmsSendListener implements ShouldQueue
         if (!empty($smsData) && !empty($smsData['recipient']) && !empty($smsData['message'])) {
             $this->smsService->sendSms($smsData);
         }else{
-            Log::channel('sms_log')->info("Sms payload format is invalid & the payload is ".json_encode($smsData,JSON_PRETTY_PRINT));
+            Log::channel('sms_log')->info("Sms payload format is invalid & the payload is ".json_encode($smsData));
             throw_if(true, RuntimeException::class, "Sms payload format is invalid");
         }
 
