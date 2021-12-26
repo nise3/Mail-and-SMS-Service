@@ -65,6 +65,7 @@ $app->configure('services');
 $app->configure('nise3');
 $app->configure('httpclientendpoint');
 $app->configure('mail');
+$app->configure('sms');
 $app->configure('IdpUser');
 $app->configure('nise3RabbitMq');
 /*
@@ -104,6 +105,8 @@ $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->register(Felixkiss\UniqueWithValidator\ServiceProvider::class);
 $app->register(Illuminate\Mail\MailServiceProvider::class);
+$app->register(Khbd\LaravelSmsBD\SMSServiceProvider::class);
+$app->register(Ixudra\Curl\CurlServiceProvider::class);
 $app->register(Khbd\LaravelWso2IdentityApiUser\IdpUserServiceProvider::class);
 
 $app->register(App\Providers\EventServiceProvider::class);

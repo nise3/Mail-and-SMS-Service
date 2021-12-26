@@ -44,7 +44,7 @@ class FileHandler
         return $path;
     }
 
-    public static function storeFileContent(array $contents, array $allowContentExtension, string $basePath): array
+    public static function storeFileContent(array $contents,string $basePath): array
     {
         if (empty($contents)) {
             return [];
@@ -56,9 +56,8 @@ class FileHandler
         $uploadedFilePath = [];
         foreach ($contents as $fileUrl) {
             $contentName = Uuid::uuid4() . "-" . substr($fileUrl, strrpos($fileUrl, '/') + 1);
-            $fileNameExplode = explode(".", $contentName);
-
-            if (!empty($fileNameExplode) && in_array(end($fileNameExplode), $allowContentExtension)) {
+            $content = file_get_contents($fileUrl);
+            if (!empty($content)) {
                 $content = file_get_contents($fileUrl);
                 $contentPath = $basePath . "/" . $contentName;
 
