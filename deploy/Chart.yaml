@@ -1,6 +1,6 @@
 apiVersion: v2
-name: nise3-institute
-description: nise3 institute management API
+name: nise3-mail
+description: nise3 mail service
 
 # A chart can be either an 'application' or a 'library' chart.
 #
