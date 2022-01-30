@@ -107,6 +107,7 @@ $app->register(Felixkiss\UniqueWithValidator\ServiceProvider::class);
 $app->register(Illuminate\Mail\MailServiceProvider::class);
 $app->register(Khbd\LaravelSmsBD\SMSServiceProvider::class);
 $app->register(Ixudra\Curl\CurlServiceProvider::class);
+$app->register(Illuminate\Redis\RedisServiceProvider::class);
 
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\RabbitMQServiceProvider::class);
