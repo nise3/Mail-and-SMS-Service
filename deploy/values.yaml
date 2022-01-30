@@ -56,17 +56,25 @@ variables:
     APP_DEBUG: "true"
     APP_URL: "gateway-dev.nise3.xyz"
 
-    DB_HOST: 192.168.10.95
-    DB_PORT: "3306"
+    DB_HOST: "db-service.default"
+    DB_PORT: 3306
     DB_DATABASE: mail
-    DB_USERNAME: nise3
-    DB_PASSWORD: "nise3"
+    DB_USERNAME: core3
+    DB_PASSWORD: core3
 
-    RABBITMQ_HOST: "rabbitmqcluster"
+    REDIS_HOST: "redis.redis"
+    REDIS_PASSWORD: "k?admin"
+    REDIS_PORT: 6379
+
+    RABBITMQ_HOST: "rabbitmqcluster.default"
     RABBITMQ_PORT: "5672"
     RABBITMQ_VHOST: "/"
     RABBITMQ_USER: "default_user_8JE9yWDb4fHdn35Ua9w"
     RABBITMQ_PASSWORD: "OvK7CUJOlZHfLWbYeTjdTlbdG2GHfr1Q"
+
+    WSO2_APIM_BASE_URL: "https://apim-dev.nise3.xyz"
+    WSO2_APIM_CLIENT_KEY: "YB8yDxCc2eDmTeV_DQix9E17dQQa"
+    WSO2_APIM_CLIENT_SECRET: "dnZiGK34AvPErTZxpxzmkf0RznUa"
 
     WSO2_IDP_BASE_URL: "https://identity-dev.nise3.xyz"
     WSO2_IDP_BASE_USER_URL: "https://identity-dev.nise3.xyz/scim2/Users"
@@ -83,12 +91,12 @@ variables:
     MAIL_API_BASE_URL: "http://nise3-mail.default/api/v1/"
 
     MAIL_MAILER: smtp
-    MAIL_HOST: smtp.googlemail.com
-    MAIL_PORT: 465
-    MAIL_USERNAME: ""
-    MAIL_PASSWORD: ""
+    MAIL_HOST: mail.nise.gov.bd
+    MAIL_PORT: 25
+    MAIL_USERNAME: "noreply@nise.gov.bd"
+    MAIL_PASSWORD: "DYeho9X2"
     MAIL_ENCRYPTION: ssl
-    MAIL_FROM_ADDRESS: ""
+    MAIL_FROM_ADDRESS: "noreply@nise.gov.bd"
     MAIL_FROM_NAME: Nise3
 
   STAGING:
