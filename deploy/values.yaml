@@ -97,7 +97,7 @@ variables:
     MAIL_PASSWORD: "DYeho9X2"
     MAIL_ENCRYPTION: ssl
     MAIL_FROM_ADDRESS: "noreply@nise.gov.bd"
-    MAIL_FROM_NAME: Nise3
+    MAIL_FROM_NAME: "Nise Cube"
 
   STAGING:
     APP_ENV: "staging"
