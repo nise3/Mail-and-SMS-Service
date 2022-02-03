@@ -17,7 +17,7 @@ variables:
   ltsAcme: false
 
   # app version, changing version will auto deploy the app to current version
-  imageAppVersion: "2.0.0"
+  imageAppVersion: "2.0.1"
 
   # increase this when you need scale up
   replicaCount: 1
@@ -36,7 +36,7 @@ variables:
   imageRepository: registry.nise3.xyz/nise3-mail-service
 
   #git hub project id
-  githubProjectRepoID: "12735662"
+  githubProjectRepoID: "31592692"
 
   #fetch laravel php artisan or bash command and run on run
   enableGitCommitCommandFetch: true
