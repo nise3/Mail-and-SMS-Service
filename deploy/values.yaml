@@ -17,7 +17,7 @@ variables:
   ltsAcme: false
 
   # app version, changing version will auto deploy the app to current version
-  imageAppVersion: "2.0.1"
+  imageAppVersion: "2.0.2"
 
   # increase this when you need scale up
   replicaCount: 1
@@ -103,7 +103,7 @@ variables:
     MAIL_PASSWORD: "DYeho9X2"
     MAIL_ENCRYPTION: ssl
     MAIL_FROM_ADDRESS: "noreply@nise.gov.bd"
-    MAIL_FROM_NAME: "Nise Cube"
+    MAIL_FROM_NAME: "Nise-Cube"
 
   STAGING:
     APP_ENV: "staging"
