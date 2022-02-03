@@ -36,7 +36,7 @@ variables:
   imageRepository: registry.nise3.xyz/nise3-mail-service
 
   #git hub project id
-  githubProjectRepoID: "12735662"
+  githubProjectRepoID: "31592692"
 
   #fetch laravel php artisan or bash command and run on run
   enableGitCommitCommandFetch: true
