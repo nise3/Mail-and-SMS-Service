@@ -40,7 +40,7 @@ spec:
           args:
             - artisan
             - queue:work
-            - --queue=work --queue=sms.q,mail.q
+            - --queue=sms.q,mail.q
           imagePullPolicy: {{ .Values.variables.imagePullPolicy }}
           ports:
             - containerPort: 80
