@@ -36,7 +36,7 @@ spec:
         - name:  {{ .Chart.Name }}
           image: "{{ .Values.variables.imageRepository }}:{{ .Values.variables.imageAppVersion  | default .Chart.AppVersion }}"
           args:
-            - php /app/artisan queue:work --queue=sms.q,mail.q
+            - service apache2 start && php /app/artisan queue:work --queue=sms.q,mail.q
           command:
             - sh
             - -c
