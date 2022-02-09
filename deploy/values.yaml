@@ -17,7 +17,7 @@ variables:
   ltsAcme: false
 
   # app version, changing version will auto deploy the app to current version
-  imageAppVersion: "2.0.5"
+  imageAppVersion: "2.0.6"
 
   # increase this when you need scale up
   replicaCount: 1
@@ -99,10 +99,10 @@ variables:
     MAIL_MAILER: smtp
     MAIL_HOST: smtp.gmail.com
     MAIL_PORT: 587
-    MAIL_USERNAME: "softbd.dev@gmail.com"
+    MAIL_USERNAME: "softbd.mail.dev@gmail.com"
     MAIL_PASSWORD: "softbd.dev@gmail.com123"
     MAIL_ENCRYPTION: tls
-    MAIL_FROM_ADDRESS: "noreply@nise.gov.bd"
+    MAIL_FROM_ADDRESS: "softbd.mail.dev@gmail.com"
     MAIL_FROM_NAME: "noreply"
 
   STAGING:
