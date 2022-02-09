@@ -25,13 +25,13 @@ class MailSendListener implements ShouldQueue
         $mailData = json_decode(json_encode($event), true);
         $mailData = $mailData['data'] ?? [];
 
-        Log::channel('mail_log')->debug('Mail Payload: ');
-        Log::channel('mail_log')->debug($mailData);
+        Log::channel('mail_log')->info('Mail Payload: ');
+        Log::channel('mail_log')->info($mailData['to'] . " - " . $mailData['from']);
 
         if (!empty($mailData) && !empty($mailData['to']) && !empty($mailData['from']) && !empty($mailData['subject']) && !empty($mailData['message_body'])) {
             $this->mailService->sendMail($mailData);
         } else {
-            Log::channel('mail_log')->debug("Mail payload format is invalid & the payload is ".json_encode($mailData));
+            Log::channel('mail_log')->info("Mail payload format is invalid & the payload is " . json_encode($mailData));
             throw_if(true, Exception::class, "Mail payload format is invalid   & the payload is ");
         }
     }
