@@ -7,11 +7,8 @@ use App\Helpers\Classes\FileHandler;
 use App\Mail\SendMail;
 use App\Models\MailLog;
 use Exception;
-use http\Exception\RuntimeException;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Ramsey\Uuid\Uuid;
 use Throwable;
 
 /**
@@ -19,7 +16,7 @@ use Throwable;
  */
 class MailService
 {
-    public const RECIPIENT_NAME = 'Nise3';
+    public const RECIPIENT_NAME = 'Nise';
     public const CACHE_KEY_TEMPORARY_ATTACHMENT_FILEPATH = "CACHE_KEY_TEMPORARY_ATTACHMENT_FILEPATH";
     public const TEMPORARY_ATTACHMENT_FILEPATH = "email-temporary-file";
 
@@ -104,7 +101,7 @@ class MailService
         $mailSend = new SendMail($config);
 
         Mail::send($mailSend);
-        throw_if((bool)count(Mail::failures()), RuntimeException::class, 'Email Send to ' . implode(', ', $mailData['to']) . " is fail.");
+        throw_if((bool)count(Mail::failures()), Exception::class, 'Email Send to ' . implode(', ', $mailData['to']) . " is fail.");
 
         $mailLog = app(MailLog::class);
         $mailLog->mail_log = $config;
