@@ -23,10 +23,14 @@ class MailSendListener implements ShouldQueue
     public function handle($event)
     {
         $mailData = json_decode(json_encode($event), true);
+
         Log::channel('mail_log')->info("consumed-mail-payload-after-parsing" . json_encode($mailData));
+
         $mailData = $mailData['data'] ?? [];
         if (!empty($mailData) && !empty($mailData['to']) && !empty($mailData['from']) && !empty($mailData['subject']) && !empty($mailData['message_body'])) {
+
             Log::channel('mail_log')->info('Mail Sent to: ' . json_encode($mailData['to']) . " - " . $mailData['from'] . ' - ' . $mailData['subject']);
+
             $this->mailService->sendMail($mailData);
         } else {
             Log::channel('mail_log')->info("Mail payload format is invalid & the payload is " . json_encode($mailData));
