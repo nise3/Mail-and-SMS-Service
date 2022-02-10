@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Services\MailService;
+use Exception;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -29,11 +30,13 @@ class MailSendListener implements ShouldQueue
 
         Log::debug("consumed-mail-data-payload-after-parsing" . json_encode($mailData));
 
+
         if (!empty($mailData) && !empty($mailData['to']) && !empty($mailData['from']) && !empty($mailData['subject']) && !empty($mailData['message_body'])) {
+//            Log::channel('mail_log')->info('Mail Sent to: ' . $mailData['to'] . " - " . $mailData['from'] . ' - ' . $mailData['subject']);
             $this->mailService->sendMail($mailData);
         } else {
-            Log::channel('mail_log')->info("Mail payload format is invalid & the payload is " . json_encode($mailData));
-            throw_if(true, \Exception::class, "Mail payload format is invalid   & the payload is ");
+//            Log::channel('mail_log')->info("Mail payload format is invalid & the payload is " . json_encode($mailData));
+            throw_if(true, Exception::class, "Mail payload format is invalid   & the payload is ");
         }
     }
 }
