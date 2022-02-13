@@ -35,6 +35,19 @@ return [
     */
 
     'channels' => [
+        'elasticsearch' => [
+            'driver' => 'monolog',
+            'level' => 'debug',
+            'handler' => \Monolog\Handler\ElasticsearchHandler::class,
+            'formatter' => \Monolog\Formatter\ElasticsearchFormatter::class,
+            'formatter_with' => [
+                'index' => env('ELASTIC_LOGS_INDEX'),
+                'type' => '_doc',
+            ],
+            'handler_with' => [
+                'client' => \Elasticsearch\ClientBuilder::create()->setHosts([env('ELASTIC_HOST')])->build(),
+            ],
+        ],
         'sms_log' => [
             'driver' => 'daily',
             'path' => storage_path('logs/mail-sms/' . date('Y/F/') . 'sms/sms_log.log'),
