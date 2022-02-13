@@ -24,6 +24,8 @@ class MailSendListener implements ShouldQueue
     {
         $mailData = json_decode(json_encode($event), true);
 
+        Log::info("MailSendListener Consumed");
+
         Log::channel('mail_log')->info("consumed-mail-payload-after-parsing" . json_encode($mailData));
 
         $mailData = $mailData['data'] ?? [];
