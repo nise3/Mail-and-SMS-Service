@@ -68,6 +68,10 @@ variables:
     DB_USERNAME: core3
     DB_PASSWORD: core3
 
+    LOG_CHANNEL: "stack"
+    ELASTIC_HOST: "http://localhost:9200"
+    ELASTIC_LOGS_INDEX: "mail_sms_file_logs"
+
     CACHE_DRIVER: "redis"
     REDIS_CLIENT: "predis"
     REDIS_HOST: "redis-headless.redis-node"
@@ -111,11 +115,22 @@ variables:
     APP_ENV: "staging"
     APP_DEBUG: "false"
     APP_URL: "gateway-dev.nise3.xyz"
+
     DB_HOST: 172.17.177.79
     DB_PORT: "3306"
     DB_DATABASE: institute
     DB_USERNAME: n3_institute
     DB_PASSWORD: "kvx6V3Y^7"
+
+    LOG_CHANNEL: "stack"
+    ELASTIC_HOST: "http://localhost:9200"
+    ELASTIC_LOGS_INDEX: "mail_sms_file_logs"
+
+    CACHE_DRIVER: "redis"
+    REDIS_CLIENT: "predis"
+    REDIS_HOST: "redis-headless.redis-node"
+    REDIS_PASSWORD: "k?admin"
+    REDIS_PORT: 6379
 
     RABBITMQ_HOST: "jaguar.rmq.cloudamqp.com"
     RABBITMQ_PORT: "5672"
@@ -157,6 +172,16 @@ variables:
     DB_DATABASE: mail
     DB_USERNAME: nise3
     DB_PASSWORD: "nise3"
+
+    LOG_CHANNEL: "stack"
+    ELASTIC_HOST: "http://localhost:9200"
+    ELASTIC_LOGS_INDEX: "mail_sms_file_logs"
+
+    CACHE_DRIVER: "redis"
+    REDIS_CLIENT: "predis"
+    REDIS_HOST: "redis-headless.redis-node"
+    REDIS_PASSWORD: "k?admin"
+    REDIS_PORT: 6379
 
     RABBITMQ_HOST: "jaguar.rmq.cloudamqp.com"
     RABBITMQ_PORT: "5672"
