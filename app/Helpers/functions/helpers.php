@@ -70,7 +70,7 @@ if (!function_exists("idpUserErrorMessage")) {
     function idUserErrorMessage($exception): array
     {
         $statusCode = $exception->getCode();
-        Log::info("status.code".$statusCode);
+        Log::info("status.code" . $statusCode);
         $errors = [
             '_response_status' => [
                 'success' => false,
@@ -112,3 +112,18 @@ if (!function_exists("idpUserErrorMessage")) {
         }
     }
 }
+
+if (!function_exists("logSelector")) {
+
+    /**
+     * @return array
+     */
+    function logSelector(): array
+    {
+        if (env('LOG_CHANNEL') == 'elasticsearch') {
+            return config('elasticSearchLogConfig');
+        }
+        return config('lumenDefaultLogConfig');
+    }
+}
+
