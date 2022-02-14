@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 (new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
     dirname(__DIR__)
@@ -68,6 +68,8 @@ $app->configure('mail');
 $app->configure('sms');
 $app->configure('IdpUser');
 $app->configure('nise3RabbitMq');
+$app->configure('elasticSearchLogConfig');
+$app->configure('lumenDefaultLogConfig');
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -127,7 +129,7 @@ $app->register(VladimirYuldashev\LaravelQueueRabbitMQ\LaravelQueueRabbitMQServic
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
 ], function ($router) {
-    require __DIR__.'/../routes/web.php';
+    require __DIR__ . '/../routes/web.php';
 });
 
 return $app;
