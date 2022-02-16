@@ -33,7 +33,7 @@ variables:
   serviceTargetPort: 80
 
   #app buil image
-  imageRepository:registry.nise.gov.bd/nise3-mail-service
+  imageRepository: registry.nise.gov.bd/nise3-mail-service
 
   #git hub project id
   githubProjectRepoID: "31592692"
