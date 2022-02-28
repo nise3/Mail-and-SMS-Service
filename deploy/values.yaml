@@ -5,9 +5,9 @@
 
 variables:
 
-  devImageVersion: &dev_image "2.1.6"
+  devImageVersion: &dev_image "2.1.7"
 
-  productionImageVersion: &prod_image "2.1.6"
+  productionImageVersion: &prod_image "2.1.7"
 
   #auto scaling config
   #autoScalingEnabled: 0
@@ -153,12 +153,12 @@ variables:
     WSO2_IDP_CLIENT_SECRET: "Sygpg0CyFLLsXxO7ExytffHw7fwa"
 
     MAIL_MAILER: smtp
-    MAIL_HOST: smtp.gmail.com
+    MAIL_HOST: mail.nise.gov.bd
     MAIL_PORT: 587
-    MAIL_USERNAME: "softbd.mail.dev@gmail.com"
-    MAIL_PASSWORD: "softbd.dev@gmail.com123"
-    MAIL_ENCRYPTION: tls
-    MAIL_FROM_ADDRESS: "softbd.mail.dev@gmail.com"
+    MAIL_USERNAME: "noreply@nise.gov.bd"
+    MAIL_PASSWORD: "DYeho9X2"
+    MAIL_ENCRYPTION: null
+    MAIL_FROM_ADDRESS: "noreply@nise.gov.bd"
     MAIL_FROM_NAME: "noreply"
 
     CORE_API_BASE_URL: "http://nise3-core.default/api/v1/"
