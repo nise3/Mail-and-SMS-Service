@@ -1,7 +1,7 @@
 {
-    "name": "laravel/lumen",
-    "description": "The Laravel Lumen Framework.",
-    "keywords": ["framework", "laravel", "lumen"],
+    "name": "nise/mail-sms-api-service",
+    "description": "mail sms api service",
+    "keywords": ["nise", "mail", "sms"],
     "license": "MIT",
     "type": "project",
     "require": {
