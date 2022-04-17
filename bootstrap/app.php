@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 (new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
     dirname(__DIR__)
@@ -65,6 +65,11 @@ $app->configure('services');
 $app->configure('nise3');
 $app->configure('httpclientendpoint');
 $app->configure('mail');
+$app->configure('sms');
+$app->configure('IdpUser');
+$app->configure('nise3RabbitMq');
+$app->configure('elasticSearchLogConfig');
+$app->configure('lumenDefaultLogConfig');
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -97,12 +102,19 @@ $app->routeMiddleware([
 |
 */
 
-// $app->register(App\Providers\EventServiceProvider::class);
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->register(Felixkiss\UniqueWithValidator\ServiceProvider::class);
 $app->register(Illuminate\Mail\MailServiceProvider::class);
+$app->register(Khbd\LaravelSmsBD\SMSServiceProvider::class);
+$app->register(Ixudra\Curl\CurlServiceProvider::class);
+$app->register(Illuminate\Redis\RedisServiceProvider::class);
+
+$app->register(App\Providers\EventServiceProvider::class);
+$app->register(App\Providers\RabbitMQServiceProvider::class);
+$app->register(VladimirYuldashev\LaravelQueueRabbitMQ\LaravelQueueRabbitMQServiceProvider::class);
+
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
@@ -117,7 +129,7 @@ $app->register(Illuminate\Mail\MailServiceProvider::class);
 $app->router->group([
     'namespace' => 'App\Http\Controllers',
 ], function ($router) {
-    require __DIR__.'/../routes/web.php';
+    require __DIR__ . '/../routes/web.php';
 });
 
 return $app;

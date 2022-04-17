@@ -1,21 +1,29 @@
 {
-    "name": "laravel/lumen",
-    "description": "The Laravel Lumen Framework.",
-    "keywords": ["framework", "laravel", "lumen"],
+    "name": "nise/mail-sms-api-service",
+    "description": "mail sms api service",
+    "keywords": ["nise", "mail", "sms"],
     "license": "MIT",
     "type": "project",
     "require": {
         "php": "^8.0",
         "ext-json": "*",
         "ext-pdo": "*",
+        "doctrine/dbal": "^3.2",
+        "elasticsearch/elasticsearch": "^7.0",
         "felixkiss/uniquewith-validator": "^3.4",
         "flipbox/lumen-generator": "^8.2",
         "guzzlehttp/guzzle": "^7.3",
         "illuminate/mail": "^8.73",
+        "illuminate/redis": "^8.73",
         "irazasyed/larasupport": "^1.7",
+        "ixudra/curl": "6.*",
+        "khbd/laravel-sms-bd": "^1.3",
         "laravel/lumen-framework": "^8.0",
         "laravel/tinker": "^2.6",
-        "phabloraylan/lumen-middleware-trim-or-convert-strings": "^1.0"
+        "league/flysystem-cached-adapter": "~1.0",
+        "phabloraylan/lumen-middleware-trim-or-convert-strings": "^1.0",
+        "predis/predis": "~1.0",
+        "anis072/lumen-queue-rabbitmq": "^12.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -27,7 +35,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers/functions/helpers.php"
+        ]
     },
     "autoload-dev": {
         "classmap": [

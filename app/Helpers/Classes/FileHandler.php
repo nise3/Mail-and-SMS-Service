@@ -5,6 +5,7 @@ namespace App\Helpers\Classes;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Ramsey\Uuid\Uuid;
 use Throwable;
 
 /**
@@ -26,7 +27,7 @@ class FileHandler
         }
         $fileName = $fileName ?: md5(time()) . '.' . $file->getClientOriginalExtension();
         if ($dir) {
-            $dir=$dir."/".date('Y/F');
+            $dir = $dir . "/" . date('Y/F');
             if (file_exists($dir)) {
                 mkdir($dir, 0777);
             }
@@ -43,20 +44,56 @@ class FileHandler
         return $path;
     }
 
+    public static function storeFileContent(array $contents,string $basePath): array
+    {
+        if (empty($contents)) {
+            return [];
+        }
+
+        if (file_exists($basePath)) {
+            mkdir($basePath, 0777);
+        }
+        $uploadedFilePath = [];
+        foreach ($contents as $fileUrl) {
+            $contentName = Uuid::uuid4() . "-" . substr($fileUrl, strrpos($fileUrl, '/') + 1);
+            $content = file_get_contents($fileUrl);
+            if (!empty($content)) {
+                $content = file_get_contents($fileUrl);
+                $contentPath = $basePath . "/" . $contentName;
+
+                if (Storage::put($contentPath, $content)) {
+                    $uploadedFilePath[] = $contentPath;
+                }
+            }
+        }
+        return $uploadedFilePath;
+    }
+
     /**
-     * @param string|null $path
+     * @param string|array $paths
      * @return bool
      */
-    public static function deleteFile(?string $path): bool
+    public
+    static function deleteFile(string|array $paths): bool
     {
-        if (is_null($path)) {
+        if (empty($paths)) {
             return false;
         }
 
         try {
-            if (Storage::exists($path)) {
-                Storage::delete($path);
+            $existingFilePath = [];
+            if (is_array($paths)) {
+                foreach ($paths as $path) {
+                    if (Storage::exists($path)) {
+                        $existingFilePath[] = $path;
+                    }
+                }
+            } else {
+                if (Storage::exists($paths)) {
+                    $existingFilePath[] = $paths;
+                }
             }
+            Storage::delete($existingFilePath);
         } catch (\Exception $exception) {
             Log::debug($exception->getMessage());
             return false;
