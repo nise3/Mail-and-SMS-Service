@@ -66,7 +66,7 @@ return [
             'username' => env('TELETALK_SMS_USERNAME', 'nise'),
             'password' => env('TELETALK_SMS_PASSWORD', 'A2ist2#0155'),
             'acode' => env('TELETALK_SMS_ACODE', '1005254'),
-            'masking' => env('TELETALK_SMS_MASKING', '16345'),
+            'masking' => env('TELETALK_SMS_MASKING', '8801552146224'),
         ],
     ],
 
