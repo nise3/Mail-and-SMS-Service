@@ -1,3 +1,5 @@
+# Welcome to NISE3 SMS & Mail API Service
+
 # Mail & SMS Service
 ```shell
 RELEASE = 'php artisan migrate:fresh --seed'
