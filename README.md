@@ -39,10 +39,4 @@ This following command has to be run in the background as a daemon service.
 php artisan queue:work --queue=sms.q,mail.q
 ```
 
-## Contributing
-
-## Security Vulnerabilities
-
-## License
-Softbd LTD**
 
