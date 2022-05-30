@@ -1,4 +1,4 @@
-**# NISE3 Mail, SMS  API Service
+# NISE3 Mail, SMS  API Service
 
 ## Official Documentation
 
