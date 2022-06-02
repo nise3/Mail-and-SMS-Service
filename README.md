@@ -1,4 +1,4 @@
-# NISE3 Mail, SMS API Service
+# NISE Mail, SMS API Service
 
 ## Following 3 branches are protected and among them develop branch is the default branch:
 ```shell
